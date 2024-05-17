@@ -2,7 +2,7 @@
 
 Bu proje, bir veteriner kliniğinin işlerini yönetmek için kullanılan bir API uygulamasıdır. Uygulama, veteriner doktorları, müşteriler ve hayvanlar ile ilgili çeşitli işlemleri yönetmenizi sağlar.
 
-![Veteriner Yönetim Sistemi](https://ibb.co/D8pcbwQ)
+![Veteriner Yönetim Sistemi](https://freeimage.host/i/JPX1rrv)
 
 ## 📋 İçindekiler
 - [Özellikler](#özellikler)
