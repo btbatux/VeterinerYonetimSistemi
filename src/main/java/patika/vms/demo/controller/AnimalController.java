@@ -1,5 +1,4 @@
 package patika.vms.demo.controller;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,9 +7,9 @@ import patika.vms.demo.CustomException.DuplicateResourceException;
 import patika.vms.demo.CustomException.ResourceNotFoundException;
 import patika.vms.demo.entities.Animal;
 import patika.vms.demo.services.AnimalService;
-
 import java.util.List;
 import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/animals")
@@ -19,11 +18,13 @@ public class AnimalController {
     @Autowired
     private AnimalService animalService;
 
+    // Tüm hayvanları getirmek için kullanılan endpoint
     @GetMapping
     public List<Animal> getAllAnimals() {
         return animalService.getAllAnimals();
     }
 
+    // Belirli bir hayvanı ID'ye göre getirmek için kullanılan endpoint
     @GetMapping("/{id}")
     public ResponseEntity<Animal> getAnimalById(@PathVariable int id) {
         Optional<Animal> animal = animalService.getAnimalById(id);
@@ -32,16 +33,19 @@ public class AnimalController {
                         .body(null));
     }
 
-    @GetMapping("/animal-name") //Veriyi almak için kullanılır. Sunucudan veri alırken kullanılır.
+    // Hayvanları isimlerine göre getirmek için kullanılan endpoint
+    @GetMapping("/animal-name")
     public List<Animal> getAnimalsByName(@RequestParam String name) {
         return animalService.getAnimalsByName(name);
     }
 
+    // Müşteri ID'sine göre hayvanları getirmek için kullanılan endpoint
     @GetMapping("/by-customer/{customerId}")
     public List<Animal> getAnimalsByCustomerId(@PathVariable int customerId) {
         return animalService.getAnimalsByCustomerId(customerId);
     }
 
+    // Yeni bir hayvan oluşturmak için kullanılan endpoint
     @PostMapping
     public ResponseEntity<Animal> createAnimal(@RequestBody Animal animal) {
         try {
@@ -54,6 +58,7 @@ public class AnimalController {
         }
     }
 
+    // Mevcut bir hayvanı güncellemek için kullanılan endpoint
     @PutMapping("/{id}")
     public ResponseEntity<Animal> updateAnimal(@PathVariable int id, @RequestBody Animal animal) {
         try {
@@ -64,7 +69,8 @@ public class AnimalController {
         }
     }
 
-    @DeleteMapping("/{id}") //Mevcut bir kaynağı silmek için kullanılır.
+    // Belirli bir hayvanı silmek için kullanılan endpoint
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteAnimal(@PathVariable int id) {
         try {
             animalService.deleteAnimal(id);
