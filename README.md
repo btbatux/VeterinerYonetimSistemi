@@ -32,7 +32,7 @@ Bu proje, bir veteriner kliniğinin işlerini yönetmek için kullanılan bir AP
 
 1. Projeyi klonlayın:
     ```sh
-    git clone https://github.com/kullanici_adi/veteriner-yonetim-sistemi.git
+    git clone https://github.com/btbatux/VeterinerYonetimSistemi.git
     cd veteriner-yonetim-sistemi
     ```
 
