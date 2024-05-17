@@ -22,6 +22,15 @@ public class DoctorController {
     @Autowired
     private DoctorService doctorService;
 
+    // Tüm doktorları listelemek için kullanılan endpoint
+    @GetMapping
+    public ResponseEntity<List<Doctor>> getAllDoctors() {
+        List<Doctor> doctors = doctorService.getAllDoctors();
+        return ResponseEntity.ok(doctors);
+    }
+
+
+
     // Belirli bir doktoru ID'ye göre getirmek için kullanılan endpoint
     @GetMapping("/{id}")
     public ResponseEntity<Doctor> getDoctorById(@PathVariable int id) {

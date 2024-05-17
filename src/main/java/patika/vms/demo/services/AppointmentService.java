@@ -2,15 +2,14 @@ package patika.vms.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import patika.vms.demo.CustomException.DoctorNotAvailableException;
-import patika.vms.demo.CustomException.ResourceNotFoundException;
 import patika.vms.demo.entities.Appointment;
-import patika.vms.demo.entities.AvailableDateRange;
+import patika.vms.demo.CustomException.CustomException;
 import patika.vms.demo.repo.AppointmentRepository;
 import patika.vms.demo.repo.AvailableDateRangeRepository;
-import patika.vms.demo.repo.DoctorRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,54 +22,57 @@ public class AppointmentService {
     @Autowired
     private AvailableDateRangeRepository availableDateRangeRepository;
 
-    @Autowired
-    private DoctorRepository doctorRepository;
-
-    public List<Appointment> getAllAppointments() {
+    public List<Appointment> findAll() {
         return appointmentRepository.findAll();
     }
 
-    public Optional<Appointment> getAppointmentById(int id) {
+    public Optional<Appointment> findById(int id) {
         return appointmentRepository.findById(id);
     }
 
-    public List<Appointment> getAppointmentsByDateBetweenAndDoctorId(LocalDateTime startDate, LocalDateTime endDate, Long doctorId) {
-        return appointmentRepository.findByAppointmentDateBetweenAndDoctor_Id(startDate, endDate, doctorId);
-    }
+    public Appointment save(Appointment appointment) {
+        LocalDate appointmentDay = appointment.getAppointmentDate().toLocalDate();
+        LocalDateTime appointmentDateTime = appointment.getAppointmentDate();
 
-    public List<Appointment> getAppointmentsByDateBetweenAndAnimalId(LocalDateTime startDate, LocalDateTime endDate, Long animalId) {
-        return appointmentRepository.findByAppointmentDateBetweenAndAnimal_Id(startDate, endDate, animalId);
-    }
-
-    public List<Appointment> getAppointmentsByDoctorIdAndDate(int doctorId, LocalDateTime date) {
-        return appointmentRepository.findByDoctor_IdAndAppointmentDate(doctorId, date);
-    }
-
-    public Appointment saveAppointment(Appointment appointment) {
-        Integer doctorId = appointment.getDoctor().getId();
-        LocalDateTime appointmentDate = appointment.getAppointmentDate();
-
-        List<AvailableDateRange> availableDateRanges = availableDateRangeRepository.findByDoctor_Id(doctorId);
-
-        boolean isAvailable = availableDateRanges.stream()
-                .anyMatch(range -> !appointmentDate.toLocalDate().isBefore(range.getStartDate()) &&
-                        !appointmentDate.toLocalDate().isAfter(range.getEndDate()));
+        // Doktorun girilen tarihte müsait olup olmadığını kontrol et
+        boolean isAvailable = availableDateRangeRepository.findAll().stream()
+                .anyMatch(dateRange ->
+                        dateRange.getDoctor().getId() == appointment.getDoctor().getId() &&
+                                !appointmentDay.isBefore(dateRange.getStartDate()) &&
+                                !appointmentDay.isAfter(dateRange.getEndDate())
+                );
 
         if (!isAvailable) {
-            throw new DoctorNotAvailableException("Doctor is not available on this date.");
+            throw new CustomException("Doktor bu tarihte çalışmamaktadır!");
+        }
+
+        // Girilen saatte başka bir randevunun olup olmadığını kontrol et
+        boolean isTimeSlotOccupied = appointmentRepository
+                .findByDoctorIdAndAppointmentDateBetween(appointment.getDoctor().getId(), appointmentDateTime.withMinute(0).withSecond(0).withNano(0), appointmentDateTime.withMinute(59).withSecond(59).withNano(999999999))
+                .stream()
+                .anyMatch(existingAppointment ->
+                        existingAppointment.getAppointmentDate().toLocalTime().equals(appointmentDateTime.toLocalTime())
+                );
+
+        if (isTimeSlotOccupied) {
+            throw new CustomException("Girilen saatte başka bir randevu mevcuttur.");
         }
 
         return appointmentRepository.save(appointment);
     }
 
-    public AvailableDateRange saveAvailableDateRange(AvailableDateRange availableDateRange) {
-        return availableDateRangeRepository.save(availableDateRange);
+
+
+
+    public void deleteById(int id) {
+        appointmentRepository.deleteById(id);
     }
 
-    public void deleteAppointment(int id) {
-        if (!appointmentRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Appointment with id " + id + " not found.");
-        }
-        appointmentRepository.deleteById(id);
+    public List<Appointment> findByDoctorAndDateRange(int doctorId, LocalDateTime startDate, LocalDateTime endDate) {
+        return appointmentRepository.findByDoctorIdAndAppointmentDateBetween(doctorId, startDate, endDate);
+    }
+
+    public List<Appointment> findByAnimalAndDateRange(int animalId, LocalDateTime startDate, LocalDateTime endDate) {
+        return appointmentRepository.findByAnimalIdAndAppointmentDateBetween(animalId, startDate, endDate);
     }
 }

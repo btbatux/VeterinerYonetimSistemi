@@ -41,6 +41,7 @@ public class Doctor {
     private List<Appointment> appointments;
 
     @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<AvailableDateRange>availableDateRanges;
 
 
