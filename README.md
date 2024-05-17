@@ -65,3 +65,15 @@ spring.datasource.password=123123
 spring.datasource.driver-class-name=org.postgresql.Driver
 spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 ```
+## API Kullanımı
+```Müşteri Ekleme
+```
+URL: POST /api/customers
+{
+    "name": "John Doe",
+    "phone": "1234567890",
+    "mail": "john.doe@example.com",
+    "address": "123 Main St",
+    "city": "Sample City"
+}
+```
