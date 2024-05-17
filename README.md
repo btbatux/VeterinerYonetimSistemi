@@ -68,8 +68,8 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 
 ## API Kullanımı
 Müşteri Ekleme
-```
 URL: POST /api/customers
+```
 {
     "name": "John Doe",
     "phone": "1234567890",
