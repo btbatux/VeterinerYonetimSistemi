@@ -18,11 +18,13 @@ public class AppointmentController {
     @Autowired
     private AppointmentService appointmentService;
 
+    // Tüm randevuları getirmek için kullanılan endpoint
     @GetMapping
     public List<Appointment> getAllAppointments() {
         return appointmentService.getAllAppointments();
     }
 
+    // Belirli bir randevuyu ID'ye göre getirmek için kullanılan endpoint
     @GetMapping("/{id}")
     public ResponseEntity<Appointment> getAppointmentById(@PathVariable int id) {
         Optional<Appointment> appointment = appointmentService.getAppointmentById(id);
@@ -30,6 +32,7 @@ public class AppointmentController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 
+    // Yeni bir randevu oluşturmak için kullanılan endpoint
     @PostMapping
     public ResponseEntity<?> createAppointment(@RequestBody Appointment appointment) {
         try {
@@ -38,10 +41,11 @@ public class AppointmentController {
         } catch (DoctorNotAvailableException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("An unexpected error occurred.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Beklenmedik bir hata oluştu.");
         }
     }
 
+    // Mevcut bir randevuyu güncellemek için kullanılan endpoint
     @PutMapping("/{id}")
     public ResponseEntity<Appointment> updateAppointment(@PathVariable int id, @RequestBody Appointment appointment) {
         Optional<Appointment> existingAppointment = appointmentService.getAppointmentById(id);
@@ -54,13 +58,14 @@ public class AppointmentController {
         }
     }
 
+    // Belirli bir randevuyu silmek için kullanılan endpoint
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteAppointment(@PathVariable int id) {
         try {
             appointmentService.deleteAppointment(id);
-            return ResponseEntity.ok("Appointment deleted successfully");
+            return ResponseEntity.ok("Randevu başarıyla silindi");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Appointment not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Randevu bulunamadı");
         }
     }
 }

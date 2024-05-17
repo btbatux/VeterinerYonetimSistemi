@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import patika.vms.demo.entities.Animal;
 import patika.vms.demo.entities.Doctor;
-import patika.vms.demo.services.AnimalService;
 import patika.vms.demo.services.DoctorService;
 
 import java.util.List;
@@ -24,7 +22,7 @@ public class DoctorController {
     @Autowired
     private DoctorService doctorService;
 
-
+    // Belirli bir doktoru ID'ye göre getirmek için kullanılan endpoint
     @GetMapping("/{id}")
     public ResponseEntity<Doctor> getDoctorById(@PathVariable int id) {
         Optional<Doctor> doctor = doctorService.getDoctorById(id);
@@ -32,17 +30,19 @@ public class DoctorController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 
+    // Doktorları isme göre getirmek için kullanılan endpoint
     @GetMapping("/name")
     public List<Doctor> getDoctorsByName(@RequestParam String name) {
         return doctorService.getDoctorsByName(name);
     }
 
+    // Doktorları şehre göre getirmek için kullanılan endpoint
     @GetMapping("/by-city")
     public List<Doctor> getDoctorsByCity(@RequestParam String city) {
         return doctorService.getDoctorsByCity(city);
     }
 
-
+    // Yeni bir doktor oluşturmak için kullanılan endpoint
     @PostMapping  // Genellikle sunucuya yeni bir veri eklerken kullanılır.
     public ResponseEntity<Doctor> createDoctor(@RequestBody Doctor doctor) {
         try {
@@ -53,7 +53,7 @@ public class DoctorController {
         }
     }
 
-
+    // Mevcut bir doktoru güncellemek için kullanılan endpoint
     @PutMapping("/{id}")
     public ResponseEntity<Doctor> updateDoctor(@PathVariable int id, @RequestBody Doctor doctor) {
         Optional<Doctor> doctorById = doctorService.getDoctorById(id);
@@ -66,7 +66,7 @@ public class DoctorController {
         }
     }
 
-
+    // Belirli bir doktoru silmek için kullanılan endpoint
     @DeleteMapping("/{id}") //Mevcut bir kaynağı silmek için kullanılır.
     public ResponseEntity<String> deleteDoctor(@PathVariable int id) {
         try {

@@ -17,11 +17,13 @@ public class AvailableDateRangeController {
     @Autowired
     private AvailableDateRangeService availableDateRangeService;
 
+    // Tüm müsait tarih aralıklarını getirmek için kullanılan endpoint
     @GetMapping
     public List<AvailableDateRange> getAllAvailableDateRanges() {
         return availableDateRangeService.getAllAvailableDateRanges();
     }
 
+    // Belirli bir müsait tarih aralığını ID'ye göre getirmek için kullanılan endpoint
     @GetMapping("/{id}")
     public ResponseEntity<AvailableDateRange> getAvailableDateRangeById(@PathVariable Integer id) {
         Optional<AvailableDateRange> availableDateRange = availableDateRangeService.getAvailableDateRangeById(id);
@@ -29,11 +31,13 @@ public class AvailableDateRangeController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 
+    // Belirli bir doktorun müsait tarih aralıklarını getirmek için kullanılan endpoint
     @GetMapping("/by-doctor/{doctorId}")
     public List<AvailableDateRange> getAvailableDateRangesByDoctorId(@PathVariable int doctorId) {
         return availableDateRangeService.getAvailableDateRangesByDoctorId(doctorId);
     }
 
+    // Yeni bir müsait tarih aralığı oluşturmak için kullanılan endpoint
     @PostMapping
     public ResponseEntity<AvailableDateRange> createAvailableDateRange(@RequestBody AvailableDateRange availableDateRange) {
         try {
@@ -44,6 +48,7 @@ public class AvailableDateRangeController {
         }
     }
 
+    // Mevcut bir müsait tarih aralığını güncellemek için kullanılan endpoint
     @PutMapping("/{id}")
     public ResponseEntity<AvailableDateRange> updateAvailableDateRange(@PathVariable int id, @RequestBody AvailableDateRange availableDateRange) {
         Optional<AvailableDateRange> existingAvailableDateRange = availableDateRangeService.getAvailableDateRangeById(id);
@@ -56,6 +61,7 @@ public class AvailableDateRangeController {
         }
     }
 
+    // Belirli bir müsait tarih aralığını silmek için kullanılan endpoint
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteAvailableDateRange(@PathVariable int id) {
         try {
