@@ -27,6 +27,7 @@ Bu proje, bir veteriner kliniğinin işlerini yönetmek için kullanılan bir AP
 - Hayvan sahiplerine ait hayvanların görüntülenmesi
 - Randevu oluşturma, güncelleme, görüntüleme ve silme
 - Doktorların müsait günlerini yönetme
+![VMS_UML](https://github.com/btbatux/VeterinerYonetimSistemi/assets/87141556/f314ce52-8532-49e3-99bb-92c157ac8d8c)
 
 ##  Kurulum
 
