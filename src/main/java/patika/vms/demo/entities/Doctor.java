@@ -37,13 +37,18 @@ public class Doctor {
     private String city;
 
 
+
+
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Appointment> appointments;
 
+
+
     @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<AvailableDateRange>availableDateRanges;
+
 
 
     @Override
