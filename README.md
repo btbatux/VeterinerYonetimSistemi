@@ -67,6 +67,7 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 ```
 
 ## API Kullanımı
+http://localhost:8081/swagger-ui/index.html
 
 ## Müşteri Yönetimi
 
@@ -145,10 +146,10 @@ URL: POST /api/vaccines
 {
     "name": "Rabies Vaccine",
     "code": "RV123",
-    "protection_start_date": "2023-06-01",
-    "protection_finish_date": "2024-06-01",
+    "protectionStartDate": "2023-06-01",
+    "protectionFinishDate": "2024-06-01",
     "animal": {
-        "id": 1
+        "id": 4
     }
 }
 ```
@@ -159,8 +160,8 @@ URL: PUT /api/vaccines/{id}
 {
     "name": "Rabies Vaccine",
     "code": "RV123",
-    "protection_start_date": "2023-06-01",
-    "protection_finish_date": "2024-06-01",
+    "protectionStartDate": "2023-06-01",
+    "protectionFinishDate": "2024-06-01",
     "animal": {
         "id": 1
     }

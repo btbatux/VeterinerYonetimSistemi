@@ -43,7 +43,8 @@ public class VaccineService {
 
         for (Vaccine existingVaccine : existingVaccines) {
             if (existingVaccine.getProtectionFinishDate().isAfter(LocalDate.now())) {
-                throw new VaccineProtectionException("Vaccine protection period has not yet ended.");
+                throw new VaccineProtectionException("Aynı aşıdan zaten yapıldı. " +
+                        "Koruma süresi henüz sona ermedi.");
             }
         }
 

@@ -1,14 +1,15 @@
 package patika.vms.demo.controller;
-
+import jdk.jfr.Enabled;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import patika.vms.demo.entities.Doctor;
 import patika.vms.demo.services.DoctorService;
-
 import java.util.List;
 import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/doctors")

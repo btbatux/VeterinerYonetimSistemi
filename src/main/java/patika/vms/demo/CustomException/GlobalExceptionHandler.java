@@ -1,4 +1,4 @@
-package patika.vms.demo.exceptions;
+package patika.vms.demo.CustomException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

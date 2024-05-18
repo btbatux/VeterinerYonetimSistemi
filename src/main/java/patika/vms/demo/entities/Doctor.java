@@ -38,6 +38,7 @@ public class Doctor {
 
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Appointment> appointments;
 
     @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL)

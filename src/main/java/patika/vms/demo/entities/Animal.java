@@ -50,6 +50,7 @@ public class Animal {
 
 
     @OneToMany(mappedBy = "animal",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Vaccine>vaccines;
 
 
