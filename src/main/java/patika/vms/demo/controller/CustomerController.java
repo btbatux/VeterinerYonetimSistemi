@@ -10,7 +10,7 @@ import patika.vms.demo.services.CustomerService;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@RestController //HTTP isteklerini işlemek için kullanıldı
 @RequestMapping("/api/customers")
 public class CustomerController {
 

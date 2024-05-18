@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@RestController //Bu anotasyon, sınıf içindeki metotların RESTful web servis isteklerine yanıt vermesini sağlar.
 @RequestMapping("/api/appointments")
 public class AppointmentController {
 

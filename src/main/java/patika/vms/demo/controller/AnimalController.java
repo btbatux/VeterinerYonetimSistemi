@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-@RestController
+@RestController //Bu anotasyon, sınıf içindeki yöntemlerin RESTful web servis isteklerine yanıt vermesini sağlar.
 @RequestMapping("/api/animals")
 public class AnimalController {
 
